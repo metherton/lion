@@ -6,12 +6,12 @@ import { FormRegisteringHost } from '../registration/FormRegisteringMixinTypes';
 import { InteractionStateHost } from '../InteractionStateMixinTypes';
 
 export declare class ChoiceGroupHost {
-  static get properties(): {
-    multipleChoice: {
-      type: BooleanConstructor;
-      attribute: string;
-    };
-  };
+  // static get properties(): {
+  //   multipleChoice: {
+  //     type: BooleanConstructor;
+  //     attribute: string;
+  //   };
+  // };
   multipleChoice: boolean;
 
   connectedCallback(): void;

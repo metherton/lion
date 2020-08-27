@@ -32,7 +32,7 @@ export declare class FormatHost {
   _calculateValues(opts: { source: 'model' | 'serialized' | 'formatted' | null }): void;
   __callParser(value: string | undefined): object;
   __callFormatter(): string;
-  _onModelValueChanged(args: { modelValue: unknown }[]): void;
+  _onModelValueChanged(arg: { modelValue: unknown }): void;
   _dispatchModelValueChangedEvent(): void;
   _syncValueUpwards(): void;
   _reflectBackFormattedValueToUser(): void;

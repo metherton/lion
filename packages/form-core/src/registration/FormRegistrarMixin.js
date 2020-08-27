@@ -3,12 +3,15 @@ import { dedupeMixin } from '@lion/core';
 import { FormControlsCollection } from './FormControlsCollection.js';
 import { FormRegisteringMixin } from './FormRegisteringMixin.js';
 
-// TODO: rename .formElements to .formControls? (or .$controls ?)
-
 /**
  * @typedef {import('../../types/registration/FormRegistrarMixinTypes').FormRegistrarMixin} FormRegistrarMixin
  * @typedef {import('../../types/registration/FormRegistrarMixinTypes').ElementWithParentFormGroup} ElementWithParentFormGroup
  * @typedef {import('../../types/registration/FormRegisteringMixinTypes').FormRegisteringHost} FormRegisteringHost
+ */
+
+/**
+ * @typedef {import('../../types/FormControlMixinTypes').FormControlHost} FormControlHost
+ * @typedef {FormControlHost & HTMLElement & {__parentFormGroup?:HTMLElement, checked?:boolean}} FormControl
  */
 
 /**
@@ -63,7 +66,7 @@ const FormRegistrarMixinImplementation = superclass =>
     }
 
     /**
-     * @param {ElementWithParentFormGroup} child the child element (field)
+     * @param {FormControl} child the child element (field)
      * @param {number} indexToInsertAt index to insert the form element at
      */
     addFormElement(child, indexToInsertAt) {
