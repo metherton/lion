@@ -1,5 +1,6 @@
 import { Constructor } from '@open-wc/dedupe-mixin';
 import { FormRegistrarHost } from './FormRegistrarMixinTypes';
+import { LitElement } from '@lion/core';
 
 export declare class FormRegisteringHost {
   connectedCallback(): void;
@@ -7,7 +8,7 @@ export declare class FormRegisteringHost {
   __parentFormGroup?: FormRegistrarHost;
 }
 
-export declare function FormRegisteringImplementation<T extends Constructor<HTMLElement>>(
+export declare function FormRegisteringImplementation<T extends Constructor<LitElement>>(
   superclass: T,
 ): T & Constructor<FormRegisteringHost> & typeof FormRegisteringHost;
 

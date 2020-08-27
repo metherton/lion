@@ -5,36 +5,37 @@ import { LionValidationFeedback } from '../src/validate/LionValidationFeedback';
 import { FormRegisteringHost } from './registration/FormRegisteringMixinTypes';
 
 export class FormControlHost {
-  static get properties(): {
-    name: {
-      type: StringConstructor;
-      reflect: boolean;
-    };
-    label: {
-      attribute: boolean;
-    };
-    helpText: {
-      type: StringConstructor;
-      attribute: string;
-    };
-    modelValue: {
-      attribute: boolean;
-    };
-    _ariaLabelledNodes: {
-      attribute: boolean;
-    };
-    _ariaDescribedNodes: {
-      attribute: boolean;
-    };
-    _repropagationRole: {
-      attribute: boolean;
-    };
-    _isRepropagationEndpoint: {
-      attribute: boolean;
-    };
-  };
+  // static get properties(): {
+  //   name: {
+  //     type: StringConstructor;
+  //     reflect: boolean;
+  //   };
+  //   label: {
+  //     attribute: boolean;
+  //   };
+  //   helpText: {
+  //     type: StringConstructor;
+  //     attribute: string;
+  //   };
+  //   modelValue: {
+  //     attribute: boolean;
+  //   };
+  //   _ariaLabelledNodes: {
+  //     attribute: boolean;
+  //   };
+  //   _ariaDescribedNodes: {
+  //     attribute: boolean;
+  //   };
+  //   _repropagationRole: {
+  //     attribute: boolean;
+  //   };
+  //   _isRepropagationEndpoint: {
+  //     attribute: boolean;
+  //   };
+  // };
   static get styles(): CSSResult | CSSResult[];
 
+  name: string;
   modelValue: unknown;
   set label(arg: string);
   get label(): string;
@@ -53,7 +54,7 @@ export class FormControlHost {
   _inputId: string;
   _ariaLabelledNodes: HTMLElement[];
   _ariaDescribedNodes: HTMLElement[];
-  _repropagationRole: 'child' | 'choice-group' | 'fieldset';
+  _repropagationRole: string; // 'child' | 'choice-group' | 'fieldset';
   _isRepropagationEndpoint: boolean;
 
   connectedCallback(): void;

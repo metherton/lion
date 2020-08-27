@@ -20,7 +20,7 @@ import { FormRegisteringMixin } from './FormRegisteringMixin.js';
  * For choice groups, the value will only stay an array.
  * See FormControlsCollection for more information
  * @type {FormRegistrarMixin}
- * @param {import('@open-wc/dedupe-mixin').Constructor<HTMLElement>} superclass
+ * @param {import('@open-wc/dedupe-mixin').Constructor<import('@lion/core').LitElement>} superclass
  */
 const FormRegistrarMixinImplementation = superclass =>
   // eslint-disable-next-line no-shadow, no-unused-vars

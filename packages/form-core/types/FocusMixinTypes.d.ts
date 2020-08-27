@@ -3,12 +3,12 @@ import { LitElement } from '@lion/core';
 import { FormControlHost } from './FormControlMixinTypes';
 
 export declare class FocusHost {
-  static properties: {
-    focused: {
-      type: BooleanConstructor;
-      reflect: boolean;
-    };
-  };
+  // static get properties(): {
+  //   focused: {
+  //     type: BooleanConstructor;
+  //     reflect: boolean;
+  //   };
+  // };
   focused: boolean;
 
   connectedCallback(): void;
