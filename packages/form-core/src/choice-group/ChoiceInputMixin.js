@@ -5,12 +5,12 @@ import { FormatMixin } from '../FormatMixin.js';
 
 /**
  * @typedef {import('../../types/FormControlMixinTypes').FormControlHost} FormControlHost
+ * @typedef {FormControlHost & HTMLElement & {__parentFormGroup?:HTMLElement, checked?:boolean}} FormControl
  */
 
 /**
  * @typedef {import('../../types/choice-group/ChoiceInputMixinTypes').ChoiceInputMixin} ChoiceInputMixin
  * @typedef {import('../../types/choice-group/ChoiceInputMixinTypes').ChoiceInputModelValue} ChoiceInputModelValue
- * @typedef {FormControlHost & HTMLElement & {__parentFormGroup?:HTMLElement, checked?:boolean}} FormControl
  */
 
 /**
@@ -25,6 +25,7 @@ const hasChanged = (nw, old = {}) => nw.value !== old.value || nw.checked !== ol
  */
 const ChoiceInputMixinImplementation = superclass =>
   // eslint-disable-next-line no-unused-vars
+  // @ts-expect-error
   class ChoiceInputMixin extends FormatMixin(superclass) {
     static get properties() {
       return {
@@ -219,8 +220,9 @@ const ChoiceInputMixinImplementation = superclass =>
      * @param {{ modelValue:unknown }} newV
      * @param {{ modelValue:unknown }} [oldV]
      */
+    // @ts-expect-error
     _onModelValueChanged({ modelValue }, { modelValue: old }) {
-      // @ts-ignore
+      // @ts-expect-error
       if (this.constructor._classProperties.get('modelValue').hasChanged(modelValue, old)) {
         super._onModelValueChanged({ modelValue });
       }
@@ -257,4 +259,5 @@ const ChoiceInputMixinImplementation = superclass =>
      */
     _syncValueUpwards() {}
   };
-export const ChoiceInputpMixin = dedupeMixin(ChoiceInputMixinImplementation);
+
+export const ChoiceInputMixin = dedupeMixin(ChoiceInputMixinImplementation);

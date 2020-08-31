@@ -2,16 +2,9 @@ import { Constructor } from '@open-wc/dedupe-mixin';
 import { LitElement } from '@lion/core';
 import { FormControlHost } from '../FormControlMixinTypes';
 import { FormRegistrarHost } from '../registration/FormRegistrarMixinTypes';
-import { FormRegisteringHost } from '../registration/FormRegisteringMixinTypes';
 import { InteractionStateHost } from '../InteractionStateMixinTypes';
 
 export declare class ChoiceGroupHost {
-  // static get properties(): {
-  //   multipleChoice: {
-  //     type: BooleanConstructor;
-  //     attribute: string;
-  //   };
-  // };
   multipleChoice: boolean;
 
   connectedCallback(): void;
@@ -58,6 +51,12 @@ export declare class ChoiceGroupHost {
 
 export declare function ChoiceGroupImplementation<T extends Constructor<LitElement>>(
   superclass: T,
-): T & Constructor<ChoiceGroupHost> & ChoiceGroupHost;
+): T &
+  Constructor<ChoiceGroupHost> &
+  ChoiceGroupHost &
+  Constructor<FormRegistrarHost> &
+  typeof FormRegistrarHost &
+  Constructor<InteractionStateHost> &
+  typeof InteractionStateHost;
 
 export type ChoiceGroupMixin = typeof ChoiceGroupImplementation;

@@ -1,9 +1,6 @@
 import { Constructor } from '@open-wc/dedupe-mixin';
-import { CSSResult, LitElement, nothing, TemplateResult } from '@lion/core';
-import { FormControlHost } from '../FormControlMixinTypes';
-import { FormRegistrarHost } from '../registration/FormRegistrarMixinTypes';
-import { FormRegisteringHost } from '../registration/FormRegisteringMixinTypes';
-import { InteractionStateHost } from '../InteractionStateMixinTypes';
+import { CSSResult, LitElement, TemplateResult } from '@lion/core';
+import { FormatHost } from '../FormatMixinTypes';
 
 export interface ChoiceInputModelValue {
   checked: boolean;
@@ -17,7 +14,7 @@ export declare class ChoiceInputHost {
 
   set choiceValue(value: any);
 
-  _requestUpdate(name: string, oldValue: any): void;
+  protected _requestUpdate(name: string, oldValue: any): void;
 
   firstUpdated(changedProperties: Map<string, any>): void;
 
@@ -54,10 +51,17 @@ export declare class ChoiceInputHost {
   _isEmpty(): void;
 
   _syncValueUpwards(): void;
+
+  type: string;
 }
 
 export declare function ChoiceInputImplementation<T extends Constructor<LitElement>>(
   superclass: T,
-): T & Constructor<ChoiceInputHost> & ChoiceInputHost;
+): T &
+  Constructor<ChoiceInputHost> &
+  ChoiceInputHost &
+  Constructor<FormatHost> &
+  FormatHost &
+  HTMLElement;
 
 export type ChoiceInputMixin = typeof ChoiceInputImplementation;

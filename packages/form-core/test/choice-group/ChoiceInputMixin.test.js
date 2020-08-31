@@ -1,28 +1,46 @@
 import { html } from '@lion/core';
-import { LionInput } from '@lion/input';
+// import { LionInput } from '@lion/input';
 import { Required } from '@lion/form-core';
 import { expect, fixture } from '@open-wc/testing';
 import sinon from 'sinon';
 import { ChoiceInputMixin } from '../../src/choice-group/ChoiceInputMixin.js';
+import { LionField } from '../../src/LionField.js';
+
+/**
+ * @typedef {import('../../types/choice-group/ChoiceInputMixinTypes').ChoiceInputHost} ChoiceInputHost
+ */
+
+class InputField extends LionField {
+  get slots() {
+    return {
+      ...super.slots,
+      input: () => document.createElement('input'),
+    };
+  }
+}
 
 describe('ChoiceInputMixin', () => {
-  before(() => {
-    class ChoiceInput extends ChoiceInputMixin(LionInput) {
-      connectedCallback() {
-        if (super.connectedCallback) super.connectedCallback();
-        this.type = 'checkbox'; // could also be 'radio', should be tested in integration test
-      }
+  // @ts-expect-error base constructors same return type
+  class ChoiceInput extends ChoiceInputMixin(InputField) {
+    constructor() {
+      super();
+      this.type = 'checkbox'; // could also be 'radio', should be tested in integration test
     }
-    customElements.define('choice-input', ChoiceInput);
-  });
+  }
+  // @ts-expect-error base constructors same return type
+  customElements.define('choice-input', ChoiceInput);
 
   it('is hidden when attribute hidden is true', async () => {
-    const el = await fixture(html`<choice-input hidden></choice-input>`);
+    const el = /** @type {ChoiceInput} */ (await fixture(
+      html`<choice-input hidden></choice-input>`,
+    ));
     expect(el).not.to.be.displayed;
   });
 
   it('has choiceValue', async () => {
-    const el = await fixture(html`<choice-input .choiceValue=${'foo'}></choice-input>`);
+    const el = /** @type {ChoiceInput} */ (await fixture(
+      html`<choice-input .choiceValue=${'foo'}></choice-input>`,
+    ));
 
     expect(el.choiceValue).to.equal('foo');
     expect(el.modelValue).to.deep.equal({

@@ -6,9 +6,6 @@ import { FormatMixin } from './FormatMixin.js';
 import { FormControlMixin } from './FormControlMixin.js';
 import { InteractionStateMixin } from './InteractionStateMixin.js'; // applies FocusMixin
 
-/* eslint-disable wc/guard-super-call */
-
-// TODO: Add submitted prop to InteractionStateMixin.
 /**
  * `LionField`: wraps <input>, <textarea>, <select> and other interactable elements.
  * Also it would follow a nice hierarchy: lion-form -> lion-fieldset -> lion-field
@@ -26,6 +23,7 @@ import { InteractionStateMixin } from './InteractionStateMixin.js'; // applies F
  *
  * @customElement lion-field
  */
+// @ts-expect-error base constructors same return type
 export class LionField extends FormControlMixin(
   InteractionStateMixin(
     FocusMixin(FormatMixin(ValidateMixin(DisabledMixin(SlotMixin(LitElement))))),
@@ -33,10 +31,6 @@ export class LionField extends FormControlMixin(
 ) {
   static get properties() {
     return {
-      submitted: {
-        // make sure validation can be triggered based on observer
-        type: Boolean,
-      },
       autocomplete: {
         type: String,
         reflect: true,
@@ -85,6 +79,7 @@ export class LionField extends FormControlMixin(
     // if not yet connected to dom can't change the value
     if (this._inputNode) {
       this._setValueAndPreserveCaret(value);
+      /** @type {string | undefined} */
       this.__value = undefined;
     } else {
       this.__value = value;
@@ -98,11 +93,16 @@ export class LionField extends FormControlMixin(
   constructor() {
     super();
     this.name = '';
-    this.submitted = false;
+    /** @type {string |undefined} */
+    this.autocomplete = undefined;
   }
 
+  /**
+   * @param {import('lit-element').PropertyValues } changedProperties
+   */
   firstUpdated(changedProperties) {
     super.firstUpdated(changedProperties);
+    /** @type {any} */
     this._initialModelValue = this.modelValue;
   }
 
@@ -118,6 +118,9 @@ export class LionField extends FormControlMixin(
     this._inputNode.removeEventListener('change', this._onChange);
   }
 
+  /**
+   * @param {import('lit-element').PropertyValues } changedProperties
+   */
   updated(changedProperties) {
     super.updated(changedProperties);
 
@@ -136,9 +139,7 @@ export class LionField extends FormControlMixin(
   }
 
   resetInteractionState() {
-    if (super.resetInteractionState) {
-      super.resetInteractionState();
-    }
+    super.resetInteractionState();
     this.submitted = false;
   }
 
@@ -147,19 +148,15 @@ export class LionField extends FormControlMixin(
     this.resetInteractionState();
   }
 
+  /**
+   * Clears modelValue.
+   * Interaction states are not cleared (use resetInteractionState for this)
+   */
   clear() {
-    if (super.clear) {
-      // Let validationMixin and interactionStateMixin clear their
-      // invalid and dirty/touched states respectively
-      super.clear();
-    }
     this.modelValue = ''; // can't set null here, because IE11 treats it as a string
   }
 
   _onChange() {
-    if (super._onChange) {
-      super._onChange();
-    }
     this.dispatchEvent(
       new CustomEvent('user-input-changed', {
         bubbles: true,

@@ -1,6 +1,7 @@
 import { CSSResult, LitElement, nothing, TemplateResult } from '@lion/core';
 import { SlotsMap, SlotHost } from '@lion/core/types/SlotMixinTypes';
 import { Constructor } from '@open-wc/dedupe-mixin';
+
 import { LionValidationFeedback } from '../src/validate/LionValidationFeedback';
 import { FormRegisteringHost } from './registration/FormRegisteringMixinTypes';
 
