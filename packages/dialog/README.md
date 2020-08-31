@@ -12,6 +12,10 @@ import './docs/styled-dialog-content.js';
 import './docs/slots-dialog-content.js';
 import './lion-dialog.js';
 
+import '../select-rich/lion-select-rich.js';
+import '../select-rich/lion-options.js';
+import '../select-rich/lion-option.js';
+
 export default {
   title: 'Overlays/Dialog',
 };
@@ -23,15 +27,15 @@ export const main = () => html`
     ${demoStyle}
   </style>
   <lion-dialog>
-    <button slot="invoker">Click me to open dialog</button>
-    <div slot="content" class="dialog">
-      Hello! You can close this dialog here:
-      <button
-        class="close-button"
-        @click=${e => e.target.dispatchEvent(new Event('close-overlay', { bubbles: true }))}
-      >
-        ⨯
-      </button>
+    <button slot="invoker">Open Dialog</button>
+    <div slot="content">
+      <lion-select-rich name="favoriteColor" label="Favorite color">
+        <lion-options slot="input">
+          <lion-option .choiceValue=${'red'}>Red</lion-option>
+          <lion-option .choiceValue=${'hotpink'} checked>Hotpink</lion-option>
+          <lion-option .choiceValue=${'teal'}>Teal</lion-option>
+        </lion-options>
+      </lion-select-rich>
     </div>
   </lion-dialog>
 `;

@@ -136,6 +136,7 @@ describe('lion-tooltip', () => {
       el.opened = true;
 
       await el.repositionComplete;
+      debugger;
 
       // Pretty sure we use flex for this now so that's why it fails
       /* expect(getComputedStyle(el.__arrowElement).getPropertyValue('top')).to.equal(

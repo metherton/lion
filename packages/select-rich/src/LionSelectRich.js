@@ -195,10 +195,11 @@ export class LionSelectRich extends ScopedElementsMixin(
   }
 
   connectedCallback() {
+    // need to do this before anything else
+    this._listboxNode.registrationTarget = this;
     if (super.connectedCallback) {
       super.connectedCallback();
     }
-    this._listboxNode.registrationTarget = this;
     this._invokerNode.selectedElement = this.formElements[this.checkedIndex];
     this.__setupInvokerNode();
     this.__setupListboxNode();
@@ -213,10 +214,6 @@ export class LionSelectRich extends ScopedElementsMixin(
     this.registrationComplete.then(() => {
       this.__initInteractionStates();
     });
-
-    this._overlaySetupComplete.then(() => {
-      this.__setupOverlay();
-    });
   }
 
   disconnectedCallback() {
@@ -226,6 +223,10 @@ export class LionSelectRich extends ScopedElementsMixin(
     if (this._labelNode) {
       this._labelNode.removeEventListener('click', this.__toggleChecked);
     }
+    this._scrollTargetNode.removeEventListener('keydown', this.__overlayOnHide);
+    this.__teardownInvokerNode();
+    this.__teardownListboxNode();
+    this.__teardownEventListeners();
   }
 
   requestUpdateInternal(name, oldValue) {
@@ -331,6 +332,20 @@ export class LionSelectRich extends ScopedElementsMixin(
         </div>
       </div>
     `;
+  }
+
+  /**
+   * @override from OverlayMixin
+   */
+  // eslint-disable-next-line class-methods-use-this
+  _syncSetupOfOverlayCtrl() {
+    // we manually set it up later
+  }
+
+  firstUpdated(changedProperties) {
+    super.firstUpdated(changedProperties);
+    this._setupOverlayCtrl();
+    this.__setupOverlay();
   }
 
   /**
@@ -688,10 +703,6 @@ export class LionSelectRich extends ScopedElementsMixin(
     this._overlayCtrl.removeEventListener('show', this.__overlayOnShow);
     this._overlayCtrl.removeEventListener('before-show', this.__overlayBeforeShow);
     this._overlayCtrl.removeEventListener('hide', this.__overlayOnHide);
-    this._scrollTargetNode.removeEventListener('keydown', this.__overlayOnHide);
-    this.__teardownInvokerNode();
-    this.__teardownListboxNode();
-    this.__teardownEventListeners();
   }
 
   __preventScrollingWithArrowKeys(ev) {

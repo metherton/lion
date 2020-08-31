@@ -51,7 +51,7 @@ describe('Local Positioning', () => {
       );
     });
 
-    it('uses top as the default placement', async () => {
+    it.only('uses top as the default placement', async () => {
       const ctrl = new OverlayController({
         ...withLocalTestConfig(),
         contentNode: fixtureSync(html` <div style="width: 80px; height: 20px;"></div> `),

@@ -186,9 +186,18 @@ export class LionInputDatepicker extends ScopedElementsMixin(OverlayMixin(LionIn
     }
   }
 
+  /**
+   * @override from OverlayMixin
+   */
+  // eslint-disable-next-line class-methods-use-this
+  _syncSetupOfOverlayCtrl() {
+    // we manually set it up later
+  }
+
   firstUpdated(changedProperties) {
     super.firstUpdated(changedProperties);
     this.__toggleInvokerDisabled();
+    this._setupOverlayCtrl();
   }
 
   /**
@@ -207,7 +216,7 @@ export class LionInputDatepicker extends ScopedElementsMixin(OverlayMixin(LionIn
   }
 
   /**
-   * Defining this overlay as a templates lets OverlayInteraceMixin
+   * Defining this overlay as a templates lets OverlayInteractionMixin
    * this is our source to give as .contentNode to OverlayController.
    * Important: do not change the name of this method.
    */
@@ -285,7 +294,7 @@ export class LionInputDatepicker extends ScopedElementsMixin(OverlayMixin(LionIn
   }
 
   async __openCalendarOverlay() {
-    this._overlayCtrl.show();
+    await this._overlayCtrl.show();
     await Promise.all([
       this._overlayCtrl.contentNode.updateComplete,
       this._calendarNode.updateComplete,

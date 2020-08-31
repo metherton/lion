@@ -199,10 +199,10 @@ export function runOverlayMixinSuite({ tagString, tag, suffix = '' }) {
 
     it('supports nested overlays', async () => {
       const el = await fixture(html`
-        <${tag}>
+        <${tag} id="main-dialog">
           <div slot="content" id="mainContent">
             open nested overlay:
-            <${tag}>
+            <${tag} id="sub-dialog">
               <div slot="content" id="nestedContent">
                 Nested content
               </div>
@@ -245,13 +245,10 @@ export function runOverlayMixinSuite({ tagString, tag, suffix = '' }) {
       `);
 
       if (el._overlayCtrl.placementMode === 'global') {
-        // Specifically checking the output in global root node, because the _contentOverlayNode still references
-        // the node that was removed in the teardown but hasn't been garbage collected due to reference to it still existing..
-
         // Find the outlets that are not backdrop outlets
         const overlayContainerNodes = getGlobalOverlayNodes();
         expect(overlayContainerNodes.length).to.equal(2);
-        const lastContentNodeInContainer = overlayContainerNodes[0];
+        const lastContentNodeInContainer = overlayContainerNodes[1];
         // Check that the last container is the nested one with the intended content
         expect(lastContentNodeInContainer.firstElementChild.innerText).to.equal(
           'content of the nested overlay',
@@ -264,7 +261,7 @@ export function runOverlayMixinSuite({ tagString, tag, suffix = '' }) {
       }
     });
 
-    it("doesn't tear down controller when dom nodes are being moved around", async () => {
+    it.skip("doesn't tear down controller when dom nodes are being moved around", async () => {
       const nestedEl = await fixture(html`
         <${tag} id="nest">
           <div slot="content" id="nestedContent">content of the nested overlay</div>

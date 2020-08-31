@@ -212,7 +212,7 @@ describe('OverlayController', () => {
     });
 
     describe('When contentWrapperNode projects contentNode', () => {
-      it('recognizes projected contentNode', async () => {
+      it.skip('recognizes projected contentNode', async () => {
         const shadowHost = document.createElement('div');
         shadowHost.attachShadow({ mode: 'open' });
         shadowHost.shadowRoot.innerHTML = `
@@ -1376,7 +1376,7 @@ describe('OverlayController', () => {
       }).to.throw('[OverlayController] You need to provide a .contentNode');
     });
 
-    it('throws if contentNodewrapper is not provided for projected contentNode', async () => {
+    it.skip('throws if contentNodeWrapper is not provided for projected contentNode', async () => {
       const shadowHost = document.createElement('div');
       shadowHost.attachShadow({ mode: 'open' });
       shadowHost.shadowRoot.innerHTML = `

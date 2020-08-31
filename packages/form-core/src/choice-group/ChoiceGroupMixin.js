@@ -129,7 +129,7 @@ export const ChoiceGroupMixin = dedupeMixin(
         }
 
         if (this.registrationComplete.done === false) {
-          this.__rejectRegistrationComplete();
+          this.__resolveRegistrationComplete();
         }
       }
 

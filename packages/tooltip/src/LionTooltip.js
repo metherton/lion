@@ -90,12 +90,6 @@ export class LionTooltip extends OverlayMixin(LitElement) {
     this.__setupRepositionCompletePromise();
   }
 
-  connectedCallback() {
-    if (super.connectedCallback) {
-      super.connectedCallback();
-    }
-  }
-
   render() {
     return html`
       <slot name="invoker"></slot>
@@ -107,6 +101,19 @@ export class LionTooltip extends OverlayMixin(LitElement) {
         </div>
       </div>
     `;
+  }
+
+  /**
+   * @override from OverlayMixin
+   */
+  // eslint-disable-next-line class-methods-use-this
+  _syncSetupOfOverlayCtrl() {
+    // we manually set it up later
+  }
+
+  firstUpdated(changedProperties) {
+    super.firstUpdated(changedProperties);
+    this._setupOverlayCtrl();
   }
 
   // eslint-disable-next-line class-methods-use-this

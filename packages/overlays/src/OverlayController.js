@@ -143,6 +143,7 @@ export class OverlayController {
       }
       this.__isContentNodeProjected = Boolean(this._defaultConfig.contentNode.assignedSlot);
     }
+    // this.__isContentNodeProjected = true;
     this.updateConfig(config);
     this.__hasActiveTrapsKeyboardFocus = false;
     this.__hasActiveBackdrop = true;
@@ -231,6 +232,9 @@ export class OverlayController {
     this.__validateConfiguration(this.config);
     Object.assign(this, this.config);
     this._init({ cfgToAdd });
+
+    // debugger;
+    // console.log('update', this.config.contentNode.isConnected);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -268,8 +272,8 @@ export class OverlayController {
     // }
   }
 
-  async _init({ cfgToAdd }) {
-    this.__initcontentWrapperNode({ cfgToAdd });
+  _init({ cfgToAdd }) {
+    this.__initContentWrapperNode({ cfgToAdd });
     this.__initConnectionTarget();
 
     if (this.placementMode === 'local') {
@@ -282,13 +286,6 @@ export class OverlayController {
   }
 
   __initConnectionTarget() {
-    // Now, add our node to the right place in dom (renderTarget)
-    if (this._contentWrapperNode !== this.__prevConfig._contentWrapperNode) {
-      if (this.config.placementMode === 'global' || !this.__isContentNodeProjected) {
-        this._contentWrapperNode.appendChild(this.contentNode);
-      }
-    }
-
     if (!this._renderTarget) {
       return;
     }
@@ -304,13 +301,20 @@ export class OverlayController {
         this._renderTarget.appendChild(this._contentWrapperNode);
       }
     }
+
+    // Now, add our node to the right place in dom (renderTarget)
+    if (this._contentWrapperNode !== this.__prevConfig._contentWrapperNode) {
+      if (this.config.placementMode === 'global' || !this.__isContentNodeProjected) {
+        this._contentWrapperNode.appendChild(this.contentNode);
+      }
+    }
   }
 
   /**
    * @desc Cleanup ._contentWrapperNode. We do this, because creating a fresh wrapper
    * can lead to problems with event listeners...
    */
-  __initcontentWrapperNode({ cfgToAdd }) {
+  __initContentWrapperNode({ cfgToAdd }) {
     if (this.config.contentWrapperNode && this.placementMode === 'local') {
       /** config [l2],[l3],[l4] */
       this._contentWrapperNode = this.config.contentWrapperNode;
@@ -568,7 +572,7 @@ export class OverlayController {
    * @param {object} config
    * @param {'init'|'show'|'hide'|'teardown'} config.phase
    */
-  async _handleFeatures({ phase }) {
+  _handleFeatures({ phase }) {
     this._handleZIndex({ phase });
 
     if (this.preventsScroll) {
